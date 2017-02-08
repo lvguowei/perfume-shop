@@ -33,31 +33,31 @@
   (map #(logic/or* (customer-requirements % lvars)) customers))
 
 (defn build-default-goals
-  "Put non specified colors to glossy by default."
-  [color-number customers lvars]
-  (let [whole (map inc (range color-number))
+  "Put non specified formulas to oil by default."
+  [formula-number customers lvars]
+  (let [whole (map inc (range formula-number))
         specified (set (map first (reduce concat customers)))
         unspecified (filter #(not (contains? specified %)) whole)]
     (map #(customer-requirement (list % 0) lvars) unspecified)))
 
 (defn build-perfume-form-goals
-  "Each color is either 0 glossy or 1 matte."
+  "Each formula is either 0 oil or 1 spray."
   [lvars]
   (map #(fd/in % (fd/interval 0 1)) lvars))
 
 (defn run-testcase
-  "Runs a testcase and return the optimal color batches,
+  "Runs a testcase and return the optimal formula batches,
   nil if impossible."
   [testcase]
-  (let [color-number (read-string (first testcase))
+  (let [formula-number (read-string (first testcase))
         customer-number (read-string (second testcase))
         customers (parse-customers (subvec testcase 2))
-        lvars (repeatedly color-number logic/lvar)]
+        lvars (repeatedly formula-number logic/lvar)]
     (->> (logic/run* [q]
            (logic/== q lvars)
            (logic/and* (build-perfume-form-goals lvars))
            (logic/and* (build-customers-goals customers lvars))
-           (logic/and* (build-default-goals color-number customers lvars)))
+           (logic/and* (build-default-goals formula-number customers lvars)))
          distinct
          (sort #(compare (reduce + %1) (reduce + %2)))
          first)))
