@@ -1,3 +1,6 @@
+![perfume-factory-19th-century-science-source](https://user-images.githubusercontent.com/2643227/140740537-30c8725f-67f7-46be-9b05-236128976b4f.jpeg)
+
+
 # Problem
 You own a perfume factory. There are N different formulas you can mix, and each formula can be prepared
 "spray" or "oil". So, you can make 2N different types of perfumes.
